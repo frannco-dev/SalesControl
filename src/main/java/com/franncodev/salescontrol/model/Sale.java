@@ -1,6 +1,6 @@
 package com.franncodev.salescontrol.model;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,11 +11,19 @@ import java.util.List;
 @Getter @Setter
 public class Sale {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long sale_id;
     private LocalDate sale_date;
     private Double price;
+
+    @OneToMany
     private List<Product> productList;
+
+    @ManyToOne
     private Customer customer;
+
+    @ManyToOne
     private Seller seller;
 
     public Sale() {

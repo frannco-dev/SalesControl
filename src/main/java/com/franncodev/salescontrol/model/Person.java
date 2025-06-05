@@ -1,12 +1,15 @@
 package com.franncodev.salescontrol.model;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+@MappedSuperclass
 @Getter @Setter
 public abstract class Person {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long person_id;
     private String name;
     private String surname;
