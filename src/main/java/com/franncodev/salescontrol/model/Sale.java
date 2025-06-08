@@ -17,7 +17,7 @@ public class Sale {
     private LocalDate sale_date;
     private Double price;
 
-    @OneToMany
+    @ManyToMany
     private List<Product> productList;
 
     @ManyToOne
