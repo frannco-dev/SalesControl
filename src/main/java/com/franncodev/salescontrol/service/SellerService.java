@@ -16,6 +16,10 @@ public class SellerService implements ISellerService{
 
     @Override
     public void createSeller(Seller seller) {
+        // primera letra del nombre + indices 2,3,4 de idCard + primera letra del apellido
+        // first letters of the first name + characters 2,3,4 from idCard + first letter of the surname
+        seller.setSeller_id(seller.getFirst_name().substring(0,1).concat(seller.getIdCard().substring(2,5)).concat(seller.getLast_name().substring(0,1)));
+
         sellerRepository.save(seller);
     }
 
