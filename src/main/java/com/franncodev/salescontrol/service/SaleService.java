@@ -1,10 +1,13 @@
 package com.franncodev.salescontrol.service;
 
+import com.franncodev.salescontrol.model.Product;
 import com.franncodev.salescontrol.model.Sale;
+import com.franncodev.salescontrol.repository.IProductRepository;
 import com.franncodev.salescontrol.repository.ISaleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -13,8 +16,19 @@ public class SaleService implements  ISaleService{
     @Autowired
     ISaleRepository saleRepository;
 
+    @Autowired
+    IProductRepository productRepository;
+
     @Override
     public void createSale(Sale sale) {
+
+        Double total = 0.;
+        for (Product product : sale.getProductList()){
+            total = total + productRepository.findById(product.getProduct_id()).orElse(null).getValue();
+        }
+        sale.setTotal_price(total);
+        sale.setSale_date(LocalDate.now());
+
         saleRepository.save(sale);
     }
 

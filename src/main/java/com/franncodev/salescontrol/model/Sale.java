@@ -15,7 +15,7 @@ public class Sale {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long sale_id;
     private LocalDate sale_date;
-    private Double price;
+    private Double total_price;
 
     @ManyToMany
     private List<Product> productList;
@@ -29,10 +29,8 @@ public class Sale {
     public Sale() {
     }
 
-    public Sale(Long sale_id, LocalDate sale_date, Double price, List<Product> productList, Customer customer, Seller seller) {
+    public Sale(Long sale_id, List<Product> productList, Customer customer, Seller seller) {
         this.sale_id = sale_id;
-        this.sale_date = sale_date;
-        this.price = price;
         this.productList = productList;
         this.customer = customer;
         this.seller = seller;
