@@ -17,8 +17,8 @@ public class Seller extends Person{
         this.seller_id = seller_id;
     }
 
-    public Seller(Long person_id, String name, String surname, String idCard, String email, String seller_id) {
-        super(person_id, name, surname, idCard, email);
+    public Seller(Long person_id, String first_name, String last_name, String idCard, String email, String seller_id) {
+        super(person_id, first_name, last_name, idCard, email);
         this.seller_id = seller_id;
     }
 
