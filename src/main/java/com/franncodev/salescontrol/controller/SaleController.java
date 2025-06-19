@@ -1,5 +1,7 @@
 package com.franncodev.salescontrol.controller;
 
+import com.franncodev.salescontrol.dto.ProductDTO;
+import com.franncodev.salescontrol.model.Product;
 import com.franncodev.salescontrol.model.Sale;
 import com.franncodev.salescontrol.service.ISaleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +48,10 @@ public class SaleController {
         return "Sale updated successfully";
     }
 
+    @GetMapping("/sales/products/{sale_id}")
+    @ResponseBody
+    public List<ProductDTO> getProducts_Sale(@PathVariable Long sale_id){
+        return saleService.getProduct_Sale(sale_id);
+    }
 
 }

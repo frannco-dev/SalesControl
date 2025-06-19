@@ -1,5 +1,7 @@
 package com.franncodev.salescontrol.service;
 
+import com.franncodev.salescontrol.dto.ProductDTO;
+import com.franncodev.salescontrol.mapper.IProductMapper;
 import com.franncodev.salescontrol.model.Product;
 import com.franncodev.salescontrol.model.Sale;
 import com.franncodev.salescontrol.repository.IProductRepository;
@@ -50,5 +52,13 @@ public class SaleService implements  ISaleService{
     @Override
     public void updateSale(Sale sale) {
         saleRepository.save(sale);
+    }
+
+    @Override
+    public List<ProductDTO> getProduct_Sale(Long sale_id) {
+
+        Sale sale = saleRepository.findById(sale_id).orElse(null);
+
+        return IProductMapper.INSTANCE.listProductToListProductDTO(sale.getProductList());
     }
 }
