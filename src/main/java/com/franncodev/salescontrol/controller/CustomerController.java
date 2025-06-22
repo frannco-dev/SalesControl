@@ -26,15 +26,15 @@ public class CustomerController {
         return customerService.getCustomerList();
     }
 
-    @GetMapping("/customers/{id_customer}")
+    @GetMapping("/customers/{customerId}")
     @ResponseBody
-    public Customer getCustomer(@PathVariable Long id_customer){
-        return customerService.getCustomer(id_customer);
+    public Customer getCustomer(@PathVariable Long customerId){
+        return customerService.getCustomer(customerId);
     }
 
-    @DeleteMapping("/customers/delete/{id_customer}")
-    public String deleteCustomer(@PathVariable Long id_customer){
-        customerService.deleteCustomer(id_customer);
+    @DeleteMapping("/customers/delete/{customerId}")
+    public String deleteCustomer(@PathVariable Long customerId){
+        customerService.deleteCustomer(customerId);
 
         return "Customer deleted successfully";
     }

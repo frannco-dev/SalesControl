@@ -13,7 +13,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long product_id;
+    private Long productId;
     private String name;
     private String trademark;
     private Double value;
@@ -22,8 +22,8 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long product_id, String name, String trademark, Double value, int stock) {
-        this.product_id = product_id;
+    public Product(Long productId, String name, String trademark, Double value, int stock) {
+        this.productId = productId;
         this.name = name;
         this.trademark = trademark;
         this.value = value;

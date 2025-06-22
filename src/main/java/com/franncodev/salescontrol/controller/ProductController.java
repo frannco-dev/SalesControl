@@ -26,15 +26,15 @@ public class ProductController {
         return productService.getProductList();
     }
 
-    @GetMapping("/products/{id_product}")
+    @GetMapping("/products/{productId}")
     @ResponseBody
-    public Product getProduct(@PathVariable Long id_product){
-        return productService.getProduct(id_product);
+    public Product getProduct(@PathVariable Long productId){
+        return productService.getProduct(productId);
     }
 
-    @DeleteMapping("/products/delete/{id_product}")
-    public String deleteProduct(@PathVariable Long id_product){
-        productService.deleteProduct(id_product);
+    @DeleteMapping("/products/delete/{productId}")
+    public String deleteProduct(@PathVariable Long productId){
+        productService.deleteProduct(productId);
 
         return "Product deleted successfully";
     }

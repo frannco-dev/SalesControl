@@ -8,18 +8,17 @@ import lombok.Setter;
 @Getter @Setter
 public class Seller extends Person{
 
-    private String seller_id;
+    private String sellerId;
 
     public Seller() {
     }
 
-    public Seller(String seller_id) {
-        this.seller_id = seller_id;
+    public Seller(String sellerId) {
+        this.sellerId = sellerId;
     }
 
-    public Seller(Long person_id, String first_name, String last_name, String idCard, String email, String seller_id) {
-        super(person_id, first_name, last_name, idCard, email);
-        this.seller_id = seller_id;
+    public Seller(Long personId, String firstName, String lastName, String idCard, String email, String sellerId) {
+        super(personId, firstName, lastName, idCard, email);
+        this.sellerId = sellerId;
     }
-
 }

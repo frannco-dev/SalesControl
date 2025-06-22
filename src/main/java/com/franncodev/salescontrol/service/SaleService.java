@@ -26,10 +26,10 @@ public class SaleService implements  ISaleService{
 
         Double total = 0.;
         for (Product product : sale.getProductList()){
-            total = total + productRepository.findById(product.getProduct_id()).orElse(null).getValue();
+            total = total + productRepository.findById(product.getProductId()).orElse(null).getValue();
         }
-        sale.setTotal_price(total);
-        sale.setSale_date(LocalDate.now());
+        sale.setTotalPrice(total);
+        sale.setSaleDate(LocalDate.now());
 
         saleRepository.save(sale);
     }

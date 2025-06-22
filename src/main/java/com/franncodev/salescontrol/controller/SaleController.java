@@ -28,15 +28,15 @@ public class SaleController {
         return saleService.getSaleList();
     }
 
-    @GetMapping("/sales/{sale_id}")
+    @GetMapping("/sales/{saleId}")
     @ResponseBody
-    public Sale getSale(@PathVariable Long sale_id){
-        return saleService.getSale(sale_id);
+    public Sale getSale(@PathVariable Long saleId){
+        return saleService.getSale(saleId);
     }
 
-    @DeleteMapping("/sales/delete/{sale_id}")
-    public String deleteSale(@PathVariable Long sale_id){
-        saleService.deleteSale(sale_id);
+    @DeleteMapping("/sales/delete/{saleId}")
+    public String deleteSale(@PathVariable Long saleId){
+        saleService.deleteSale(saleId);
 
         return "Sale deleted successfully";
     }
@@ -48,10 +48,10 @@ public class SaleController {
         return "Sale updated successfully";
     }
 
-    @GetMapping("/sales/products/{sale_id}")
+    @GetMapping("/sales/products/{saleId}")
     @ResponseBody
-    public List<ProductDTO> getProducts_Sale(@PathVariable Long sale_id){
-        return saleService.getProduct_Sale(sale_id);
+    public List<ProductDTO> getProducts_Sale(@PathVariable Long saleId){
+        return saleService.getProduct_Sale(saleId);
     }
 
 }

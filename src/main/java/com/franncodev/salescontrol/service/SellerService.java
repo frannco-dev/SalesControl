@@ -1,7 +1,6 @@
 package com.franncodev.salescontrol.service;
 
 import com.franncodev.salescontrol.model.Seller;
-import com.franncodev.salescontrol.repository.IProductRepository;
 import com.franncodev.salescontrol.repository.ISellerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ public class SellerService implements ISellerService{
     public void createSeller(Seller seller) {
         // primera letra del nombre + indices 2,3,4 de idCard + primera letra del apellido
         // first letters of the first name + characters 2,3,4 from idCard + first letter of the surname
-        seller.setSeller_id(seller.getFirst_name().substring(0,1).concat(seller.getIdCard().substring(2,5)).concat(seller.getLast_name().substring(0,1)));
+        seller.setSellerId(seller.getFirstName().substring(0,1).concat(seller.getIdCard().substring(2,5)).concat(seller.getLastName().substring(0,1)));
 
         sellerRepository.save(seller);
     }

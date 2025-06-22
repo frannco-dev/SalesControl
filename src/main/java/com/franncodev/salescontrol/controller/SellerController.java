@@ -26,15 +26,15 @@ public class SellerController {
         return sellerService.getSellerList();
     }
 
-    @GetMapping("/sellers/{id_seller}")
+    @GetMapping("/sellers/{sellerId}")
     @ResponseBody
-    public Seller getSeller(@PathVariable Long id_seller){
-        return sellerService.getSeller(id_seller);
+    public Seller getSeller(@PathVariable Long idSeller){
+        return sellerService.getSeller(idSeller);
     }
 
-    @DeleteMapping("/sellers/delete/{id_seller}")
-    public String deleteSeller(@PathVariable Long id_seller){
-        sellerService.deleteSeller(id_seller);
+    @DeleteMapping("/sellers/delete/{sellerId}")
+    public String deleteSeller(@PathVariable Long idSeller){
+        sellerService.deleteSeller(idSeller);
 
         return "Seller deleted successfully";
     }
