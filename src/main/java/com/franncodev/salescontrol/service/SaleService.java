@@ -1,6 +1,7 @@
 package com.franncodev.salescontrol.service;
 
 import com.franncodev.salescontrol.dto.ProductDTO;
+import com.franncodev.salescontrol.dto.SalesOnDateDTO;
 import com.franncodev.salescontrol.mapper.IProductMapper;
 import com.franncodev.salescontrol.model.Product;
 import com.franncodev.salescontrol.model.Sale;
@@ -60,5 +61,16 @@ public class SaleService implements  ISaleService{
         Sale sale = saleRepository.findById(sale_id).orElse(null);
 
         return IProductMapper.INSTANCE.listProductToListProductDTO(sale.getProductList());
+    }
+
+    @Override
+    public SalesOnDateDTO getSalesOnDate(LocalDate date) {
+        List<Sale> salesOnDate = saleRepository.findAllBySaleDate(date);
+
+        int totalSales = salesOnDate.size();
+
+        Double totalAmount = salesOnDate.stream().mapToDouble(Sale::getTotalPrice).sum();
+
+        return new SalesOnDateDTO(date, totalAmount, totalSales);
     }
 }

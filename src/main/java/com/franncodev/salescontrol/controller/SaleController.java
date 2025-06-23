@@ -1,12 +1,15 @@
 package com.franncodev.salescontrol.controller;
 
 import com.franncodev.salescontrol.dto.ProductDTO;
+import com.franncodev.salescontrol.dto.SalesOnDateDTO;
 import com.franncodev.salescontrol.model.Product;
 import com.franncodev.salescontrol.model.Sale;
 import com.franncodev.salescontrol.service.ISaleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -52,6 +55,12 @@ public class SaleController {
     @ResponseBody
     public List<ProductDTO> getProducts_Sale(@PathVariable Long saleId){
         return saleService.getProduct_Sale(saleId);
+    }
+
+    @GetMapping("/sales/date/{saleDate}")
+    @ResponseBody
+    public SalesOnDateDTO getSalesOnDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate saleDate){
+        return saleService.getSalesOnDate(saleDate);
     }
 
 }
