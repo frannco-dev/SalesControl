@@ -1,66 +1,69 @@
 package com.franncodev.salescontrol.controller;
 
 import com.franncodev.salescontrol.dto.ProductDTO;
+import com.franncodev.salescontrol.dto.SaleDTO;
 import com.franncodev.salescontrol.dto.SalesOnDateDTO;
 import com.franncodev.salescontrol.model.Product;
 import com.franncodev.salescontrol.model.Sale;
 import com.franncodev.salescontrol.service.ISaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/sales")
 public class SaleController {
 
     @Autowired
     ISaleService saleService;
 
-    @PostMapping("/sales/create")
-    public String createSale(@RequestBody Sale sale){
-        saleService.createSale(sale);
+    @PostMapping("/create")
+    public ResponseEntity<SaleDTO> createSale(@RequestBody Sale sale){
+        SaleDTO createdSale = saleService.createSale(sale);
 
-        return "Sale registered successfully";
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdSale);
     }
 
-    @GetMapping("/sales")
+    @GetMapping("")
     @ResponseBody
-    public List<Sale> getSaleList(){
-        return saleService.getSaleList();
+    public ResponseEntity<List<SaleDTO>> getSaleList(){
+        return ResponseEntity.ok(saleService.getSaleList());
     }
 
-    @GetMapping("/sales/{saleId}")
+    @GetMapping("/{saleId}")
     @ResponseBody
-    public Sale getSale(@PathVariable Long saleId){
-        return saleService.getSale(saleId);
+    public ResponseEntity<Optional<SaleDTO>> getSale(@PathVariable Long saleId){
+        return ResponseEntity.ok(saleService.getSale(saleId));
     }
 
-    @DeleteMapping("/sales/delete/{saleId}")
-    public String deleteSale(@PathVariable Long saleId){
+    @DeleteMapping("/delete/{saleId}")
+        public ResponseEntity<Void> deleteSale(@PathVariable Long saleId){
         saleService.deleteSale(saleId);
 
-        return "Sale deleted successfully";
+        return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/sales/update")
-    public String updateSale(@RequestBody Sale sale){
-        saleService.updateSale(sale);
-
-        return "Sale updated successfully";
+    @PutMapping("/update")
+    public ResponseEntity<SaleDTO> updateSale(@RequestBody Sale sale){
+        return ResponseEntity.ok(saleService.updateSale(sale));
     }
 
-    @GetMapping("/sales/products/{saleId}")
+    @GetMapping("/products/{saleId}")
     @ResponseBody
-    public List<ProductDTO> getProducts_Sale(@PathVariable Long saleId){
-        return saleService.getProduct_Sale(saleId);
+    public ResponseEntity<List<ProductDTO>> getProductsOfSale(@PathVariable Long saleId){
+        return ResponseEntity.ok(saleService.getProduct_Sale(saleId));
     }
 
-    @GetMapping("/sales/date/{saleDate}")
+    @GetMapping("/date/{saleDate}")
     @ResponseBody
-    public SalesOnDateDTO getSalesOnDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate saleDate){
-        return saleService.getSalesOnDate(saleDate);
+    public ResponseEntity<SalesOnDateDTO> getSalesOnDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate saleDate){
+        return ResponseEntity.ok(saleService.getSalesOnDate(saleDate));
     }
 
 }

@@ -1,20 +1,23 @@
 package com.franncodev.salescontrol.service;
 
 
+import com.franncodev.salescontrol.dto.ProductDTO;
 import com.franncodev.salescontrol.model.Product;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IProductService {
 
-    public void createProduct(Product product);
+    public ProductDTO createProduct(Product product);
 
-    public List<Product> getProductList();
+    public List<ProductDTO> getProductList();
 
-    public Product getProduct(Long id);
+    public Optional<ProductDTO> getProduct(Long id);
 
     public void deleteProduct(Long id);
 
-    public void updateProduct(Product product);
+    public ProductDTO updateProduct(Product product);
 
 }

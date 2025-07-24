@@ -1,11 +1,14 @@
 package com.franncodev.salescontrol.service;
 
+import com.franncodev.salescontrol.dto.ProductDTO;
+import com.franncodev.salescontrol.mapper.IProductMapper;
 import com.franncodev.salescontrol.model.Product;
 import com.franncodev.salescontrol.repository.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService implements IProductService{
@@ -14,18 +17,20 @@ public class ProductService implements IProductService{
     IProductRepository productRepository;
 
     @Override
-    public void createProduct(Product product) {
+    public ProductDTO createProduct(Product product) {
         productRepository.save(product);
+
+        return IProductMapper.INSTANCE.productToProductDTO(product);
     }
 
     @Override
-    public List<Product> getProductList() {
-        return productRepository.findAll();
+    public List<ProductDTO> getProductList() {
+        return IProductMapper.INSTANCE.listProductToListProductDTO(productRepository.findAll());
     }
 
     @Override
-    public Product getProduct(Long id) {
-        return productRepository.findById(id).orElse(null);
+    public Optional<ProductDTO> getProduct(Long id) {
+        return productRepository.findById(id).map(IProductMapper.INSTANCE :: productToProductDTO);
     }
 
     @Override
@@ -34,7 +39,7 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public void updateProduct(Product product) {
-        productRepository.save(product);
+    public ProductDTO updateProduct(Product product) {
+        return IProductMapper.INSTANCE.productToProductDTO(productRepository.save(product));
     }
 }

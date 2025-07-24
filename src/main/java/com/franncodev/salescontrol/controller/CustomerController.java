@@ -1,49 +1,52 @@
 package com.franncodev.salescontrol.controller;
 
+import com.franncodev.salescontrol.dto.CustomerDTO;
 import com.franncodev.salescontrol.model.Customer;
 import com.franncodev.salescontrol.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/customers")
 public class CustomerController {
 
     @Autowired
     ICustomerService customerService;
 
-    @PostMapping("/customers/create")
-    public String createCustomer(@RequestBody Customer customer){
-        customerService.createCustomer(customer);
+    @PostMapping("/create")
+    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody Customer customer){
+        CustomerDTO createdCustomer = customerService.createCustomer(customer);
 
-        return "Customer created successfully";
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomer);
     }
 
-    @GetMapping("/customers")
+    @GetMapping("")
     @ResponseBody
-    public List<Customer> getCustomerList(){
-        return customerService.getCustomerList();
+    public ResponseEntity<List<CustomerDTO>> getCustomerList(){
+        return ResponseEntity.ok(customerService.getCustomerList());
     }
 
-    @GetMapping("/customers/{customerId}")
+    @GetMapping("/{customerId}")
     @ResponseBody
-    public Customer getCustomer(@PathVariable Long customerId){
-        return customerService.getCustomer(customerId);
+    public ResponseEntity<Optional<CustomerDTO>> getCustomer(@PathVariable Long customerId){
+        return ResponseEntity.ok(customerService.getCustomer(customerId));
     }
 
-    @DeleteMapping("/customers/delete/{customerId}")
-    public String deleteCustomer(@PathVariable Long customerId){
+    @DeleteMapping("/delete/{customerId}")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable Long customerId){
         customerService.deleteCustomer(customerId);
 
-        return "Customer deleted successfully";
+        return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/customers/update")
-    public String updateCustomer(@RequestBody Customer customer){
-        customerService.updateCustomer(customer);
-
-        return "Customer updated successfully";
+    @PutMapping("/update")
+    public ResponseEntity<CustomerDTO> updateCustomer(@RequestBody Customer customer){
+        return ResponseEntity.ok(customerService.updateCustomer(customer));
     }
 
 }

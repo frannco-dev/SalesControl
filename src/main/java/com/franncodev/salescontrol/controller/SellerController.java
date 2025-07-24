@@ -1,49 +1,53 @@
 package com.franncodev.salescontrol.controller;
 
+import com.franncodev.salescontrol.dto.SellerDTO;
+import com.franncodev.salescontrol.mapper.ISellerMapper;
 import com.franncodev.salescontrol.model.Seller;
 import com.franncodev.salescontrol.service.ISellerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/sellers")
 public class SellerController {
 
     @Autowired
     ISellerService sellerService;
 
-    @PostMapping("/sellers/create")
-    public String createSeller(@RequestBody Seller seller){
-        sellerService.createSeller(seller);
+    @PostMapping("/create")
+    public ResponseEntity<SellerDTO> createSeller(@RequestBody Seller seller){
+        SellerDTO createdSeller = sellerService.createSeller(seller);
 
-        return "Seller created successfully";
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdSeller);
     }
 
-    @GetMapping("/sellers")
+    @GetMapping("")
     @ResponseBody
-    public List<Seller> getSellerList(){
-        return sellerService.getSellerList();
+    public ResponseEntity<List<SellerDTO>> getSellerList(){
+        return ResponseEntity.ok(sellerService.getSellerList());
     }
 
-    @GetMapping("/sellers/{sellerId}")
+    @GetMapping("/{sellerId}")
     @ResponseBody
-    public Seller getSeller(@PathVariable Long idSeller){
-        return sellerService.getSeller(idSeller);
+    public ResponseEntity<Optional<SellerDTO>> getSeller(@PathVariable Long sellerId){
+        return ResponseEntity.ok(sellerService.getSeller(sellerId));
     }
 
-    @DeleteMapping("/sellers/delete/{sellerId}")
-    public String deleteSeller(@PathVariable Long idSeller){
-        sellerService.deleteSeller(idSeller);
+    @DeleteMapping("/delete/{sellerId}")
+    public ResponseEntity<Void> deleteSeller(@PathVariable Long sellerId){
+        sellerService.deleteSeller(sellerId);
 
-        return "Seller deleted successfully";
+        return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/sellers/update")
-    public String updateSeller(@RequestBody Seller seller){
-        sellerService.updateSeller(seller);
-
-        return "Seller updated successfully";
+    @PutMapping("/update")
+    public ResponseEntity<SellerDTO> updateSeller(@RequestBody Seller seller){
+        return ResponseEntity.ok(sellerService.updateSeller(seller));
     }
 
 }

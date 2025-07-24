@@ -1,11 +1,14 @@
 package com.franncodev.salescontrol.service;
 
+import com.franncodev.salescontrol.dto.CustomerDTO;
+import com.franncodev.salescontrol.mapper.ICustomerMapper;
 import com.franncodev.salescontrol.model.Customer;
 import com.franncodev.salescontrol.repository.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService implements ICustomerService{
@@ -14,18 +17,18 @@ public class CustomerService implements ICustomerService{
     ICustomerRepository customerRepository;
 
     @Override
-    public void createCustomer(Customer customer) {
-        customerRepository.save(customer);
+    public CustomerDTO createCustomer(Customer customer) {
+        return ICustomerMapper.INSTANCE.customerToCustomerDTO(customerRepository.save(customer));
     }
 
     @Override
-    public List<Customer> getCustomerList() {
-        return customerRepository.findAll();
+    public List<CustomerDTO> getCustomerList() {
+        return ICustomerMapper.INSTANCE.listCustomerToListCustomerDTO(customerRepository.findAll());
     }
 
     @Override
-    public Customer getCustomer(Long id) {
-        return customerRepository.findById(id).orElse(null);
+    public Optional<CustomerDTO> getCustomer(Long id) {
+        return customerRepository.findById(id).map(ICustomerMapper.INSTANCE :: customerToCustomerDTO);
     }
 
     @Override
@@ -34,7 +37,7 @@ public class CustomerService implements ICustomerService{
     }
 
     @Override
-    public void updateCustomer(Customer customer) {
-        customerRepository.save(customer);
+    public CustomerDTO updateCustomer(Customer customer) {
+        return ICustomerMapper.INSTANCE.customerToCustomerDTO(customerRepository.save(customer));
     }
 }

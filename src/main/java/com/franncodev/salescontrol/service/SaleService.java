@@ -1,8 +1,10 @@
 package com.franncodev.salescontrol.service;
 
 import com.franncodev.salescontrol.dto.ProductDTO;
+import com.franncodev.salescontrol.dto.SaleDTO;
 import com.franncodev.salescontrol.dto.SalesOnDateDTO;
 import com.franncodev.salescontrol.mapper.IProductMapper;
+import com.franncodev.salescontrol.mapper.ISaleMapper;
 import com.franncodev.salescontrol.model.Product;
 import com.franncodev.salescontrol.model.Sale;
 import com.franncodev.salescontrol.repository.IProductRepository;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SaleService implements  ISaleService{
@@ -23,7 +26,7 @@ public class SaleService implements  ISaleService{
     IProductRepository productRepository;
 
     @Override
-    public void createSale(Sale sale) {
+    public SaleDTO createSale(Sale sale) {
 
         Double total = 0.;
         for (Product product : sale.getProductList()){
@@ -32,17 +35,17 @@ public class SaleService implements  ISaleService{
         sale.setTotalPrice(total);
         sale.setSaleDate(LocalDate.now());
 
-        saleRepository.save(sale);
+        return ISaleMapper.INSTANCE.saleToSaleDTO(saleRepository.save(sale));
     }
 
     @Override
-    public List<Sale> getSaleList() {
-        return saleRepository.findAll();
+    public List<SaleDTO> getSaleList() {
+        return ISaleMapper.INSTANCE.listSaleToListSaleDTO(saleRepository.findAll());
     }
 
     @Override
-    public Sale getSale(Long sale_id) {
-        return saleRepository.findById(sale_id).orElse(null);
+    public Optional<SaleDTO> getSale(Long sale_id) {
+        return saleRepository.findById(sale_id).map(ISaleMapper.INSTANCE :: saleToSaleDTO);
     }
 
     @Override
@@ -51,8 +54,8 @@ public class SaleService implements  ISaleService{
     }
 
     @Override
-    public void updateSale(Sale sale) {
-        saleRepository.save(sale);
+    public SaleDTO updateSale(Sale sale) {
+        return ISaleMapper.INSTANCE.saleToSaleDTO(saleRepository.save(sale));
     }
 
     @Override
